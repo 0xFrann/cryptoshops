@@ -4,6 +4,14 @@ import "tailwindcss/tailwind.css";
 import AppContext, { ILocation } from "../context/AppContext";
 import "../styles/globals.css";
 
+const defaultLocation = {
+  address: "Córdoba, Argentina",
+  latLng: {
+    lat: -31.4173391,
+    lng: -64.183319,
+  },
+};
+
 const MyApp = ({ Component, pageProps }: AppProps): React.ReactElement => {
   const [location, setLocation] = useState<ILocation>(null);
 
@@ -18,6 +26,13 @@ const MyApp = ({ Component, pageProps }: AppProps): React.ReactElement => {
             lat: localStorageLocation.latLng.lat,
             lng: localStorageLocation.latLng.lng,
           },
+          setLocation: setLocation,
+        },
+      });
+    } else {
+      setLocation({
+        location: {
+          ...defaultLocation,
           setLocation: setLocation,
         },
       });
