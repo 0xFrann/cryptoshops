@@ -1,11 +1,27 @@
-# CashBoat
-Calculate the conversion from offshore money to local currency.
+# CryptoShops
+Find nearby businesses to pay with cryptocurrencies
 
 ## Installation
 
 ```bash
 yarn  # preferred over npm install
 ```
+
+## Development
+
+Run the development server
+```bash
+yarn dev 
+```
+
+Run the development server with SSL (so that the location permission works)
+```bash
+brew install mkcert # install mkcert
+mkcert localhost # create the certifications for localhost and copy into ./https_cert/
+yarn dev-SSL # run the server on local and lan connection
+```
+[MKCert documentation](https://paulintrognon.fr/blog/typescript-prettier-eslint-next-js
+)
 
 ## Boilerplate
 https://paulintrognon.fr/blog/typescript-prettier-eslint-next-js
