@@ -20,7 +20,7 @@ brew install mkcert # install mkcert
 mkcert localhost # create the certifications for localhost and copy into ./https_cert/
 yarn dev-SSL # run the server on local and lan connection
 ```
-[MKCert documentation](https://paulintrognon.fr/blog/typescript-prettier-eslint-next-js
+[MKCert repository](https://github.com/FiloSottile/mkcert
 )
 
 ## Boilerplate
