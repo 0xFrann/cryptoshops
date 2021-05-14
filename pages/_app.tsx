@@ -1,10 +1,34 @@
 import type { AppProps /*, AppContext */ } from "next/app";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "tailwindcss/tailwind.css";
+import AppContext, { ILocation } from "../context/AppContext";
 import "../styles/globals.css";
 
 const MyApp = ({ Component, pageProps }: AppProps): React.ReactElement => {
-  return <Component {...pageProps} />;
+  const [location, setLocation] = useState<ILocation>(null);
+
+  useEffect(() => {
+    const localStorageLocation = JSON.parse(localStorage.getItem("location"));
+
+    if (localStorageLocation) {
+      setLocation({
+        location: {
+          address: localStorageLocation.address,
+          latLng: {
+            lat: localStorageLocation.latLng.lat,
+            lng: localStorageLocation.latLng.lng,
+          },
+          setLocation: setLocation,
+        },
+      });
+    }
+  }, []);
+
+  return (
+    <AppContext.Provider value={location}>
+      <Component {...pageProps} />
+    </AppContext.Provider>
+  );
 };
 
 // Only uncomment this method if you have blocking data requirements for

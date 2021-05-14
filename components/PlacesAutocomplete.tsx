@@ -1,4 +1,6 @@
+import { useEffect, useRef } from "react";
 import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
+import useOnclickOutside from "react-cool-onclickoutside";
 
 const WrapperStyle = "relative m-2";
 const InputStyle = "w-full py-2 px-4 h-12 rounded-3xl outline-none focus:shadow-md";
@@ -9,9 +11,13 @@ const ItemStyle = "py-2 px-3 m-0 text-left";
 
 interface IPlacesAutocomplete {
   onSelect?: (string) => void;
+  defaultAddress?: string;
 }
 
-const PlacesAutocomplete = ({ onSelect }: IPlacesAutocomplete): React.ReactElement => {
+const PlacesAutocomplete = ({
+  onSelect,
+  defaultAddress,
+}: IPlacesAutocomplete): React.ReactElement => {
   const {
     ready,
     value,
@@ -26,6 +32,24 @@ const PlacesAutocomplete = ({ onSelect }: IPlacesAutocomplete): React.ReactEleme
     },
     debounce: 300,
   });
+
+  const inputRef = useRef();
+
+  const wrapperRef = useOnclickOutside(() => {
+    // When user clicks outside of the component, we can dismiss
+    // the searched suggestions by calling this method
+    clearSuggestions();
+  });
+
+  useEffect(() => {
+    if (defaultAddress) setValue(defaultAddress);
+  }, [defaultAddress]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (document.activeElement !== inputRef.current) clearSuggestions();
+    }, 300);
+  }, []);
 
   const handleInput = (e) => {
     // Update the keyword of the input element
@@ -44,7 +68,12 @@ const PlacesAutocomplete = ({ onSelect }: IPlacesAutocomplete): React.ReactEleme
       getGeocode({ address: description })
         .then((results) => getLatLng(results[0]))
         .then((latLng) => {
-          onSelect(latLng);
+          onSelect({
+            address: description,
+            latLng: {
+              ...latLng,
+            },
+          });
         })
         .catch((error) => {
           console.log("😱 Error: ", error);
@@ -59,20 +88,23 @@ const PlacesAutocomplete = ({ onSelect }: IPlacesAutocomplete): React.ReactEleme
       } = suggestion;
 
       return (
-        <li
+        <div
           key={place_id}
           onClick={handleSelect(suggestion)}
           onKeyDown={handleSelect(suggestion)}
           className={ItemStyle}
+          role="button"
+          tabIndex={0}
         >
           <strong>{main_text}</strong> <small>{secondary_text}</small>
-        </li>
+        </div>
       );
     });
 
   return (
-    <div className={WrapperStyle}>
+    <div className={WrapperStyle} ref={wrapperRef}>
       <input
+        ref={inputRef}
         value={value}
         onChange={handleInput}
         disabled={!ready}
@@ -81,7 +113,7 @@ const PlacesAutocomplete = ({ onSelect }: IPlacesAutocomplete): React.ReactEleme
       />
       {status === "OK" && (
         <div className={ListWrapperStyle}>
-          <ul className={ListStyle}>{renderSuggestions()}</ul>
+          <div className={ListStyle}>{renderSuggestions()}</div>
         </div>
       )}
     </div>

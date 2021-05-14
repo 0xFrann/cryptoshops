@@ -35,6 +35,6 @@ app.prepare().then(() => {
         handle(req, res, parsedUrl);
     }).listen(port, '0.0.0.0', (err) => {
         if (err) throw err;
-        console.log("ready - started server on url: https://localhost:" + port + " and: https://" + results["en0"] + port);
+        console.log("ready - started server on url: https://localhost:" + port + " and: https://" + results["en0"] + ":" + port);
     });
 });

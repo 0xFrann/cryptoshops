@@ -25,7 +25,7 @@ const Map = ({ lat = -31.4173391, lng = -64.183319 }: IMapProps): React.ReactEle
       zoom={[13]}
     >
       <Marker coordinates={[lng, lat]}>
-        <Image src="/point.svg" alt="Picture of the author" width={24} height={24} />
+        <Image src="/point-icon.svg" alt="Icono marcador mapa" width={24} height={24} />
       </Marker>
     </MapComponent>
   );

@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useRouter } from "next/router";
 import PlacesAutocomplete from "../components/PlacesAutocomplete";
 import Image from "next/image";
+import Head from "next/head";
+import AppContext from "../context/AppContext";
+import { getGeocode } from "use-places-autocomplete";
 
 const BackgroundSyle = "bg-blue-300 min-h-screen flex flex-col items-center px-6 py-10";
 const HeaderStyle = "text-center";
@@ -18,13 +21,24 @@ const ButtonTextStyle = "text-base font-semibold";
 const IndexPage = (): React.ReactElement => {
   const [category, setCategory] = useState(null);
   const router = useRouter();
+  const context = useContext(AppContext);
 
   const getCurrentLocation = (): void => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        searchShops({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
+        getGeocode({
+          location: {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          },
+        }).then((results) => {
+          searchShops({
+            address: results[0].formatted_address,
+            latLng: {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            },
+          });
         });
       },
       function (error) {
@@ -34,42 +48,53 @@ const IndexPage = (): React.ReactElement => {
     );
   };
 
-  const searchShops = ({ lat, lng }): void => {
-    router.push(`/map?lat=${lat}&lng=${lng}`);
+  const searchShops = (location: {
+    address: string;
+    latLng: { lat: number; lng: number };
+  }): void => {
+    localStorage.setItem("location", JSON.stringify(location));
+    context.location.setLocation({ location: { ...context.location, ...location } });
+    router.push(`/map?lat=${location.latLng.lat}&lng=${location.latLng.lng}`);
   };
 
   return (
-    <div className={BackgroundSyle}>
-      <header className={HeaderStyle}>
-        <h1 className={TitleSyle}>
-          Crypto <strong>Shops</strong>
-        </h1>
-        <h2 className={SubTitleSyle}>Encontrá negocios que aceptan criptomonedas</h2>
-      </header>
-      <main className={ContentStyle}>
-        <div className={FormStyle}>
-          <select
-            className={SelectStyle}
-            placeholder="Categoría"
-            defaultValue={category}
-            onBlur={(e) => setCategory(e.target.value)}
-          >
-            <option value="all">Todo</option>
-          </select>
-          <PlacesAutocomplete onSelect={searchShops} />
-        </div>
-        <button onClick={getCurrentLocation} className={ButtonStyle}>
-          <Image src="/place-icon.svg" height={72} width={72} alt="Icono marcador en mapa" />
-          <span className={ButtonExpandedTextStyle}>Explorar</span>
-          <span className={ButtonTextStyle}>Negocios Cercanos</span>
-        </button>
-      </main>
-      <span className={FooterStyle}>
-        <a href="https://github.com/francomd/crypto-shops" target="_blank" rel="noreferrer">
-          CryptoShops v0.0.1 - GitHub
-        </a>
-      </span>
-    </div>
+    <>
+      <Head>
+        <title>CryptoShops</title>
+        <meta property="og:title" content="My page title" key="title" />
+      </Head>
+      <div className={BackgroundSyle}>
+        <header className={HeaderStyle}>
+          <h1 className={TitleSyle}>
+            Crypto <strong>Shops</strong>
+          </h1>
+          <h2 className={SubTitleSyle}>Encontrá negocios que aceptan criptomonedas</h2>
+        </header>
+        <main className={ContentStyle}>
+          <div className={FormStyle}>
+            <select
+              className={SelectStyle}
+              placeholder="Categoría"
+              defaultValue={category}
+              onBlur={(e) => setCategory(e.target.value)}
+            >
+              <option value="all">Todo</option>
+            </select>
+            <PlacesAutocomplete onSelect={searchShops} />
+          </div>
+          <button onClick={getCurrentLocation} className={ButtonStyle}>
+            <Image src="/place-icon.svg" height={72} width={72} alt="Icono marcador en mapa" />
+            <span className={ButtonExpandedTextStyle}>Explorar</span>
+            <span className={ButtonTextStyle}>Negocios Cercanos</span>
+          </button>
+        </main>
+        <span className={FooterStyle}>
+          <a href="https://github.com/francomd/crypto-shops" target="_blank" rel="noreferrer">
+            CryptoShops v0.0.1 - GitHub
+          </a>
+        </span>
+      </div>
+    </>
   );
 };
 
