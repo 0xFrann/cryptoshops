@@ -111,7 +111,7 @@ const PlacesAutocomplete = ({
         onChange={handleInput}
         disabled={!ready}
         placeholder="Ingresar dirección"
-        className={InputStyle}
+        className={`${InputStyle} ${value ? "pr-10" : ""}`}
       />
       {status === "OK" && (
         <div className={ListWrapperStyle}>
