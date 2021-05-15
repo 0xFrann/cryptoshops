@@ -111,7 +111,7 @@ const PlacesAutocomplete = ({
         onChange={handleInput}
         disabled={!ready}
         placeholder="Ingresar dirección"
-        className={`${InputStyle} ${value ? "pr-10" : "pr-4"}`}
+        className={`${InputStyle} ${value ? "pr-10" : ""}`}
       />
       {status === "OK" && (
         <div className={ListWrapperStyle}>
@@ -129,7 +129,6 @@ const PlacesAutocomplete = ({
           <Image src="/close-icon.svg" height={12} width={12} alt="Borrar campo de texto" />
         </div>
       )}
-      <div className="hidden right-4"></div>
     </div>
   );
 };
