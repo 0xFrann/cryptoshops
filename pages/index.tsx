@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useRouter } from "next/router";
 import PlacesAutocomplete from "../components/PlacesAutocomplete";
 import Image from "next/image";
@@ -12,7 +12,7 @@ const TitleSyle = "text-7xl";
 const SubTitleSyle = "mt-4 text-xl";
 const ContentStyle = "md:w-1/3 w-full flex flex-col flex-grow items-center justify-between";
 const FormStyle = "flex flex-col p-6 text-center w-full";
-const SelectStyle = "m-2 py-2 px-4 h-12 rounded-full outline-none focus:shadow-md";
+const SelectStyle = "m-2 py-2 px-4 h-12 rounded-full outline-none focus:shadow-md bg-white";
 const FooterStyle = "hover:text-gray-600 my-6";
 const ButtonStyle = "focus:outline-none my-4 flex flex-col items-center content-center";
 const ButtonExpandedTextStyle = "text-sm font-light uppercase tracking-widest mt-3";
