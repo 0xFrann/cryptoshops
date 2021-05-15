@@ -55,7 +55,7 @@ const SearchMenu = ({
     latLng: { lat: number; lng: number };
   }): void => {
     localStorage.setItem("location", JSON.stringify(location));
-    context.location.setLocation({ location: { ...context.location, ...location } });
+    context.location.setLocation({ ...context.location, ...location });
     router.push(`/map?lat=${location.latLng.lat}&lng=${location.latLng.lng}`);
   };
 

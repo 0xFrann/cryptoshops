@@ -11,6 +11,7 @@ export interface ILocation {
 
 export interface ICategories {
   list: string[];
+  selected: string;
   setCategories: Dispatch<SetStateAction<ICategories>>;
 }
 
@@ -26,7 +27,7 @@ export default AppContext;
 export const useInitializeContextHook = (
   defaultLocation: Omit<ILocation, "setLocation">,
   defaultCategories: Omit<ICategories, "setCategories">
-): [location: ILocation, categories: ICategories] => {
+): { location: ILocation; categories: ICategories } => {
   const [location, setLocation] = useState<ILocation>(null);
   const [categories, setCategories] = useState<ICategories>(null);
 
@@ -54,5 +55,5 @@ export const useInitializeContextHook = (
       setCategories: setCategories,
     });
   }, []);
-  return [location, categories];
+  return { location, categories };
 };

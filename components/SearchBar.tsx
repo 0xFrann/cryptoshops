@@ -6,7 +6,7 @@ const CategoryStyle = "flex text-md text-gray-600 cursor-pointer";
 const SearchStyle = "flex text-md text-gray-800 cursor-pointer";
 
 interface ISearchBar {
-  category: string[];
+  category: string;
   onClick: () => void;
 }
 
@@ -15,7 +15,7 @@ const SearchBar = ({ category, onClick }: ISearchBar): React.ReactElement => {
     <button className={BarStyle} onClick={onClick}>
       {category && category.length ? (
         <div className={CategoryStyle}>
-          <Image src="/close-icon.svg" width={12} height={12} alt="Icono de cerrar" />
+          <Image src="/tune-icon.svg" width={12} height={12} alt="Icono de cerrar" />
           <span className="ml-2 capitalize">{category}</span>
         </div>
       ) : (

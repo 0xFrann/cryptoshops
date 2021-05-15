@@ -19,9 +19,9 @@ const ButtonExpandedTextStyle = "text-sm font-light uppercase tracking-widest mt
 const ButtonTextStyle = "text-base font-semibold";
 
 const IndexPage = (): React.ReactElement => {
-  const [category, setCategory] = useState(null);
   const router = useRouter();
   const context = useContext(AppContext);
+  const { location, categories } = context;
 
   const getCurrentLocation = (): void => {
     navigator.geolocation.getCurrentPosition(
@@ -48,13 +48,21 @@ const IndexPage = (): React.ReactElement => {
     );
   };
 
-  const searchShops = (location: {
+  const searchShops = (newLocation: {
     address: string;
     latLng: { lat: number; lng: number };
   }): void => {
-    localStorage.setItem("location", JSON.stringify(location));
-    context.location.setLocation({ location: { ...context.location, ...location } });
-    router.push(`/map?lat=${location.latLng.lat}&lng=${location.latLng.lng}`);
+    localStorage.setItem("location", JSON.stringify(newLocation));
+    location.setLocation({ ...location, ...newLocation });
+    router.push(`/map?lat=${newLocation.latLng.lat}&lng=${newLocation.latLng.lng}`);
+  };
+
+  const onSelectCategory = (e): void => {
+    if (e.target.value === "null") {
+      categories.setCategories({ ...categories, selected: null });
+    } else {
+      categories.setCategories({ ...categories, selected: e.target.value });
+    }
   };
 
   return (
@@ -75,10 +83,17 @@ const IndexPage = (): React.ReactElement => {
             <select
               className={SelectStyle}
               placeholder="Categoría"
-              defaultValue={category}
-              onBlur={(e) => setCategory(e.target.value)}
+              defaultValue={categories.selected}
+              onBlur={(e) => onSelectCategory(e)}
             >
-              <option value="all">Todo</option>
+              <option value="null">Todo</option>
+              {categories &&
+                categories.list?.length &&
+                categories.list?.map((category, i) => (
+                  <option value={category} className="capitalize" key={i}>
+                    {category}
+                  </option>
+                ))}
             </select>
             <PlacesAutocomplete onSelect={searchShops} />
           </div>

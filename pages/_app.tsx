@@ -13,11 +13,12 @@ const defaultLocation = {
 };
 
 const defaultCategories = {
-  list: [""],
+  list: ["Autos", "Telefonos"],
+  selected: "",
 };
 
 const MyApp = ({ Component, pageProps }: AppProps): React.ReactElement => {
-  const [location, categories] = useInitializeContextHook(defaultLocation, defaultCategories);
+  const { location, categories } = useInitializeContextHook(defaultLocation, defaultCategories);
 
   return (
     <AppContext.Provider value={{ location: { ...location }, categories: { ...categories } }}>
