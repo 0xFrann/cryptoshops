@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
@@ -8,6 +9,7 @@ const ListWrapperStyle =
   "absolute top-14 h-24 w-full bg-white rounded-lg overflow-hidden shadow-xl z-50";
 const ListStyle = "h-full overflow-y-auto py-2";
 const ItemStyle = "py-2 px-3 m-0 text-left";
+const InputCloseIconStyle = "absolute top-3 right-4";
 
 interface IPlacesAutocomplete {
   onSelect?: (string) => void;
@@ -42,7 +44,7 @@ const PlacesAutocomplete = ({
   });
 
   useEffect(() => {
-    if (defaultAddress) setValue(defaultAddress);
+    if (defaultAddress) setValue(defaultAddress, false);
   }, [defaultAddress]);
 
   useEffect(() => {
@@ -51,7 +53,7 @@ const PlacesAutocomplete = ({
     }, 300);
   }, []);
 
-  const handleInput = (e) => {
+  const handleInput = (e): void => {
     // Update the keyword of the input element
     setValue(e.target.value);
   };
@@ -59,11 +61,6 @@ const PlacesAutocomplete = ({
   const handleSelect =
     ({ description }) =>
     () => {
-      // When user selects a place, we can replace the keyword without request data from API
-      // by setting the second parameter to "false"
-      setValue(description, false);
-      clearSuggestions();
-
       // Get latitude and longitude via utility functions
       getGeocode({ address: description })
         .then((results) => getLatLng(results[0]))
@@ -78,6 +75,11 @@ const PlacesAutocomplete = ({
         .catch((error) => {
           console.log("😱 Error: ", error);
         });
+
+      // When user selects a place, we can replace the keyword without request data from API
+      // by setting the second parameter to "false"
+      setValue(description, false);
+      clearSuggestions();
     };
 
   const renderSuggestions = () =>
@@ -108,12 +110,23 @@ const PlacesAutocomplete = ({
         value={value}
         onChange={handleInput}
         disabled={!ready}
-        placeholder="Ingresar direccion"
+        placeholder="Ingresar dirección"
         className={InputStyle}
       />
       {status === "OK" && (
         <div className={ListWrapperStyle}>
           <div className={ListStyle}>{renderSuggestions()}</div>
+        </div>
+      )}
+      {value && value?.length && (
+        <div
+          className={InputCloseIconStyle}
+          onClick={() => setValue("")}
+          onKeyDown={() => setValue("")}
+          role="button"
+          tabIndex={0}
+        >
+          <Image src="/close-icon.svg" height={12} width={12} alt="Borrar campo de texto" />
         </div>
       )}
     </div>
