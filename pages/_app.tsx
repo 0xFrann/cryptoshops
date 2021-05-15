@@ -1,7 +1,7 @@
 import type { AppProps /*, AppContext */ } from "next/app";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "tailwindcss/tailwind.css";
-import AppContext, { ILocation } from "../context/AppContext";
+import AppContext, { useInitializeContextHook } from "../context/AppContext";
 import "../styles/globals.css";
 
 const defaultLocation = {
@@ -12,35 +12,15 @@ const defaultLocation = {
   },
 };
 
+const defaultCategories = {
+  list: [""],
+};
+
 const MyApp = ({ Component, pageProps }: AppProps): React.ReactElement => {
-  const [location, setLocation] = useState<ILocation>(null);
-
-  useEffect(() => {
-    const localStorageLocation = JSON.parse(localStorage.getItem("location"));
-
-    if (localStorageLocation) {
-      setLocation({
-        location: {
-          address: localStorageLocation.address,
-          latLng: {
-            lat: localStorageLocation.latLng.lat,
-            lng: localStorageLocation.latLng.lng,
-          },
-          setLocation: setLocation,
-        },
-      });
-    } else {
-      setLocation({
-        location: {
-          ...defaultLocation,
-          setLocation: setLocation,
-        },
-      });
-    }
-  }, []);
+  const [location, categories] = useInitializeContextHook(defaultLocation, defaultCategories);
 
   return (
-    <AppContext.Provider value={location}>
+    <AppContext.Provider value={{ location: { ...location }, categories: { ...categories } }}>
       <Component {...pageProps} />
     </AppContext.Provider>
   );
