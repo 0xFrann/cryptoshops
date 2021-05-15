@@ -61,9 +61,7 @@ const SearchMenu = ({
 
   return (
     <div
-      className={`${SearchMenuStyle} ${visible ? "opacity-100 left-0" : "opacity-0 -left-full"} ${
-        isVisible ? "block" : "none"
-      }`}
+      className={`${SearchMenuStyle} ${visible ? "opacity-100 left-0" : "opacity-0 -left-full"}`}
     >
       <div className={MenuHeaderStyle}>
         <span className={MenuTitleStyle}>Filtrar negocios</span>
