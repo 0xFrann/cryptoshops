@@ -48,6 +48,8 @@ module.exports = {
           },
         ],
 
+        '@typescript-eslint/no-empty-function': 'off',
+
         'prettier/prettier': ['error', {}, { usePrettierrc: true }], // Includes .prettierrc.js rules
       },
     },

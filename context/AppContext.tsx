@@ -1,3 +1,4 @@
+import axios from "axios";
 import { createContext, Dispatch, SetStateAction, useEffect, useState } from "react";
 
 export interface ILocation {
@@ -54,6 +55,18 @@ export const useInitializeContextHook = (
       ...defaultCategories,
       setCategories: setCategories,
     });
+
+    const fetchData = async (): Promise<void> => {
+      const result = await axios.get("/api/categories");
+      setCategories({
+        list: result.data.list,
+        setCategories: setCategories,
+        selected: "",
+      });
+    };
+
+    fetchData();
   }, []);
+
   return { location, categories };
 };

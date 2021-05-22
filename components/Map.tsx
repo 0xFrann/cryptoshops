@@ -11,6 +11,7 @@ interface IMapProps {
 const MapComponent = ReactMapboxGl({
   accessToken:
     "pk.eyJ1IjoiZnJhbmNvbWQiLCJhIjoiY2tvbml6eXFxMDFtZzJwbW9kZnMxb3l4aCJ9.dSVHZAF_E18d16kb7J_uNQ",
+  attributionControl: false,
 });
 
 const Map = ({ lat = -31.4173391, lng = -64.183319 }: IMapProps): React.ReactElement => {

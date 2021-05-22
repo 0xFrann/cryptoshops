@@ -13,7 +13,7 @@ const defaultLocation = {
 };
 
 const defaultCategories = {
-  list: ["Autos", "Telefonos"],
+  list: [],
   selected: "",
 };
 

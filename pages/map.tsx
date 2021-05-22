@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import SearchMenu from "../components/SearchMenu";
 import AppContext from "../context/AppContext";
+import AddShopButton from "../components/AddShopButton";
 
 const BackgroundSyle = "bg-blue-300 h-screen flex flex-col items-center justify-center";
 const ContentStyle = "relative h-full w-full";
@@ -39,6 +40,7 @@ const MapPage = (): React.ReactElement => {
           }
           closeMenu={onClickSearchBar}
         />
+        <AddShopButton />
       </div>
     </div>
   );
