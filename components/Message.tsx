@@ -15,9 +15,9 @@ interface ImessageProps {
 
 const ColorList = {
   success: "green-400",
-  warning: "orange-400",
+  warning: "yellow-400",
   error: "red-400",
-  info: "blue-400",
+  info: "yellow-400",
 };
 
 const Icon = ({

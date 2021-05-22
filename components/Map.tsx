@@ -1,7 +1,7 @@
 import React from "react";
-import Image from "next/image";
 import ReactMapboxGl, { Marker } from "react-mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import PointIcon from "../assets/point-icon.svg";
 
 interface IMapProps {
   lat?: number;
@@ -26,7 +26,7 @@ const Map = ({ lat = -31.4173391, lng = -64.183319 }: IMapProps): React.ReactEle
       zoom={[13]}
     >
       <Marker coordinates={[lng, lat]}>
-        <Image src="/point-icon.svg" alt="Icono marcador mapa" width={24} height={24} />
+        <PointIcon width={32} height={32} className="fill-current text-yellow-600" />
       </Marker>
     </MapComponent>
   );

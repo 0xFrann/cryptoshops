@@ -5,7 +5,7 @@ import AppContext from "../context/AppContext";
 import PlacesAutocomplete from "./PlacesAutocomplete";
 
 const SearchMenuStyle =
-  "absolute top-0 transition-all duration-300	z-50 bg-blue-100 p-6 w-full h-full";
+  "absolute top-0 transition-all duration-300	z-50 bg-gray-200 p-6 w-full h-full";
 const FormStyle = "flex flex-col text-center w-full";
 const SelectStyle = "m-2 py-2 px-4 h-12 rounded-full outline-none focus:shadow-md bg-white";
 const MenuTitleStyle = "text-lg";

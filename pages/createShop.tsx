@@ -7,7 +7,7 @@ import Header from "../components/Header";
 import AppContext from "../context/AppContext";
 import Message, { TMessageState } from "../components/Message";
 
-const BackgroundSyle = "bg-blue-100 min-h-screen flex flex-col items-center";
+const BackgroundSyle = "bg-gray-200 min-h-screen flex flex-col items-center";
 const ContentStyle = "max-w-lg w-full px-6 py-10 flex flex-col flex-grow items-center flex-grow";
 const HeaderStyle = "p-6 mb-4";
 const TitleSyle = "text-4xl";
@@ -15,7 +15,7 @@ const SubTitleSyle = "mt-4 text-xl";
 const FormStyle = "flex flex-col text-center w-full";
 const InputStyle = "m-2 py-2 px-4 h-12 rounded-3xl outline-none focus:shadow-md";
 const SelectStyle = "m-2 py-2 px-4 h-12 rounded-full outline-none focus:shadow-md bg-white";
-const ButtonStyle = "m-2 h-12 rounded-full focus:outline-none bg-blue-500 text-white";
+const ButtonStyle = "m-2 h-12 rounded-full focus:outline-none bg-yellow-500 text-white";
 const ErrorStyle = "ring-red-500 ring-2";
 
 type IFormValues = {
