@@ -1,27 +1,27 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { TShop } from "../types";
 
-const Shops = (): React.ReactElement => {
-  const [shopList, setShopList] = useState([]);
+interface IShopsProps {
+  shops: TShop[];
+}
 
-  useEffect(() => {
-    const fetchData = async (): Promise<void> => {
-      const result = await axios.get("/api/shops");
-      setShopList([...result.data]);
-    };
-
-    fetchData();
-  }, []);
-
-  return shopList ? (
+const Shops = ({ shops }: IShopsProps): React.ReactElement => {
+  return shops ? (
     <ul>
-      {shopList.map((shop, i) => (
+      {shops.map((shop, i) => (
         <li key={i}>{shop.name}</li>
       ))}
     </ul>
   ) : (
     <h1>There is no data to show</h1>
   );
+};
+
+export const getServerSideProps = async (): Promise<{ props: IShopsProps }> => {
+  const shops = await axios.get("http://localhost:3000/api/shops");
+  return {
+    props: { shops: [...shops.data] },
+  };
 };
 
 export default Shops;
