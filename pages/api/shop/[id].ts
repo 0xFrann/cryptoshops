@@ -12,7 +12,7 @@ export default async (req, res) => {
           ...req.body,
           updated: new Date().toISOString(),
         });
-      res.status(200).end({ message: "Shop modified" });
+      res.status(200).json({ message: "Shop modified" });
     } else if (req.method === "GET") {
       const doc = await db.collection("shops").doc(id).get();
       if (!doc.exists) {
@@ -22,7 +22,7 @@ export default async (req, res) => {
       }
     } else if (req.method === "DELETE") {
       await db.collection("shops").doc(id).delete();
-      res.status(200).end({ message: "Shop deleted" });
+      res.status(200).json({ message: "Shop deleted" });
     }
   } catch (e) {
     res.status(400).end();
