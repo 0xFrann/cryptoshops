@@ -18,7 +18,7 @@ const Shops = ({ shops }: IShopsProps): React.ReactElement => {
 };
 
 export const getServerSideProps = async (): Promise<{ props: IShopsProps }> => {
-  const shops = await axios.get("http://localhost:3000/api/shops");
+  const shops = await axios.get(process.env.API_HOST + "/api/shops");
   return {
     props: { shops: [...shops.data] },
   };
