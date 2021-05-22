@@ -8,7 +8,7 @@ class MyDocument extends Document {
       <Html>
         <Head>
           {/* <!-- Google / Search Engine Tags --> */}
-          <meta itemProp="name" content="Crypto Shops" />
+          <meta itemProp="title" content="Crypto Shops" />
           <meta itemProp="description" content="Encontrá negocios que aceptan cryptos" />
           <script
             src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAPS_API_KEY}&libraries=places`}
