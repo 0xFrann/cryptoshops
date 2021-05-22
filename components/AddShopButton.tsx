@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const PositionStyle = "absolute bottom-4 right-0 w-full flex justify-end";
+const PositionStyle = "absolute bottom-12 right-0 w-full flex justify-end";
 const WrapperStyle = "flex items-center";
 const IconWrapperStyle =
   "bg-gray-100 rounded-full -mr-4 z-10 h-16 w-16 flex justify-center items-center shadow-lg";
