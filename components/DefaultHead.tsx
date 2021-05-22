@@ -12,7 +12,7 @@ const DefaultHead = ({
   title = "CryptoShops",
   description = "Encontrá negocios que aceptan cryptos",
   url = "https://cryptoshops.vercel.app",
-  image = "https://cryptoshops.vercel.app/banner.png",
+  image = "https://cryptoshops.vercel.app/cryptoshops-banner.png",
   extra,
 }: IDefaultHeadProps): React.ReactElement => {
   return (
