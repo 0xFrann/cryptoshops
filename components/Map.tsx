@@ -67,11 +67,7 @@ const Map = ({ lat = -31.4173391, lng = -64.183319, data = [] }: IMapProps): Rea
         {isPopupVisible && selectedShop && (
           <Popup
             coordinates={[selectedShop?.location.latLng.lng, selectedShop?.location.latLng.lat]}
-            offset={{
-              "bottom-left": [12, -38],
-              bottom: [0, -38],
-              "bottom-right": [-12, -38],
-            }}
+            offset={40}
           >
             <div className={StyledPopupContent}>
               <CloseIcon
