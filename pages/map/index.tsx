@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 import { useRouter } from "next/router";
-import Map from "../components/Map";
-import Header from "../components/Header";
-import SearchBar from "../components/SearchBar";
-import SearchMenu from "../components/SearchMenu";
-import AppContext from "../context/AppContext";
-import AddShopButton from "../components/AddShopButton";
+import Map from "../../components/Map";
+import Header from "../../components/Header";
+import SearchBar from "../../components/SearchBar";
+import SearchMenu from "../../components/SearchMenu";
+import AppContext from "../../context/AppContext";
+import AddShopButton from "../../components/AddShopButton";
 
 const BackgroundSyle = "bg-yellow-500 h-screen flex flex-col items-center justify-center";
 const ContentStyle = "relative h-full w-full";

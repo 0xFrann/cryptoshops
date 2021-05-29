@@ -12,7 +12,7 @@ const LabelStyle = "";
 const AddShopButton = (): React.ReactElement => {
   return (
     <div className={PositionStyle}>
-      <Link href="/createShop">
+      <Link href="/shops/new">
         <div className={WrapperStyle}>
           <div className={IconWrapperStyle}>
             <PointIcon className={IconStyle} width={32} height={32} />

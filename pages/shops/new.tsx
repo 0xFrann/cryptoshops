@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
-import { TShop } from "../types";
+import { TShop } from "../../types";
 import { SubmitHandler, useForm } from "react-hook-form";
-import PlacesAutocomplete from "../components/PlacesAutocomplete";
-import Header from "../components/Header";
-import AppContext from "../context/AppContext";
-import Message, { TMessageState } from "../components/Message";
+import PlacesAutocomplete from "../../components/PlacesAutocomplete";
+import Header from "../../components/Header";
+import AppContext from "../../context/AppContext";
+import Message, { TMessageState } from "../../components/Message";
 
 const BackgroundSyle = "bg-gray-200 min-h-screen flex flex-col items-center";
 const ContentStyle = "max-w-lg w-full px-6 py-10 flex flex-col flex-grow items-center flex-grow";

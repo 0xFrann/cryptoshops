@@ -1,5 +1,5 @@
 import axios from "axios";
-import { TShop } from "../types";
+import { TShop } from "../../types";
 
 interface IShopsProps {
   shops: TShop[];
