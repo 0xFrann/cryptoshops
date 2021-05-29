@@ -39,7 +39,11 @@ const Map = ({ lat = -31.4173391, lng = -64.183319, data = [] }: IMapProps): Rea
 
   return (
     <MapComponent
-      center={[lng, lat]}
+      center={
+        selectedShop
+          ? [selectedShop.location.latLng.lng, selectedShop.location.latLng.lat]
+          : [lng, lat]
+      }
       style="mapbox://styles/mapbox/streets-v9"
       containerStyle={{
         height: "100%",
