@@ -6,7 +6,7 @@ import CloseIcon from "../assets/close-icon.svg";
 import { TShop } from "../types";
 
 const StyledMarker = "cursor-pointer";
-const StyledPopupContent = "relative flex flex-col y-3 px-2 pt-2 pr-6 rounded-md";
+const StyledPopupContent = "relative flex flex-col y-3 px-2 pt-2 pr-6 rounded-md w-64";
 const StyledPopupCloseIcon = "absolute top-0 right-0 cursor-pointer";
 const StyledPopupTitle = "font-bold text-base";
 const StyledPopupSubTitle = "text-gray-500";

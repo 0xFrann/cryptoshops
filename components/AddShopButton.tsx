@@ -2,11 +2,11 @@ import Link from "next/link";
 import PointIcon from "../assets/point-icon.svg";
 
 const PositionStyle = "absolute bottom-12 right-0 w-full flex justify-end";
-const WrapperStyle = "flex items-center cursor-pointer";
+const WrapperStyle = "flex items-center cursor-pointer relative z-20";
 const IconWrapperStyle =
-  "bg-yellow-500 rounded-full -mr-4 z-10 h-16 w-16 flex justify-center items-center shadow-lg";
+  "bg-yellow-500 rounded-full -mr-4 z-20 h-16 w-16 flex justify-center items-center shadow-lg";
 const IconStyle = "fill-current text-white";
-const LabelWrapperStyle = "bg-gray-100 px-4 py-3 pl-8 shadow-lg";
+const LabelWrapperStyle = "bg-gray-100 px-4 py-3 pl-8 shadow-lg relative z-10";
 const LabelStyle = "";
 
 const AddShopButton = (): React.ReactElement => {
