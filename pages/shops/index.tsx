@@ -1,11 +1,11 @@
 import axios from "axios";
 import { TShop } from "../../types";
 
-interface IShopsProps {
+interface IShopsPageProps {
   shops: TShop[];
 }
 
-const Shops = ({ shops }: IShopsProps): React.ReactElement => {
+const ShopsPage = ({ shops }: IShopsPageProps): React.ReactElement => {
   return shops ? (
     <ul>
       {shops.map((shop, i) => (
@@ -17,11 +17,11 @@ const Shops = ({ shops }: IShopsProps): React.ReactElement => {
   );
 };
 
-export const getServerSideProps = async (): Promise<{ props: IShopsProps }> => {
+export const getServerSideProps = async (): Promise<{ props: IShopsPageProps }> => {
   const shops = await axios.get(process.env.API_HOST + "/api/shops");
   return {
     props: { shops: [...shops.data] },
   };
 };
 
-export default Shops;
+export default ShopsPage;

@@ -6,11 +6,17 @@ import SearchBar from "../../components/SearchBar";
 import SearchMenu from "../../components/SearchMenu";
 import AppContext from "../../context/AppContext";
 import AddShopButton from "../../components/AddShopButton";
+import { TShop } from "../../types";
+import axios from "axios";
 
 const BackgroundSyle = "bg-yellow-500 h-screen flex flex-col items-center justify-center";
 const ContentStyle = "relative h-full w-full";
 
-const MapPage = (): React.ReactElement => {
+interface IMapPageProps {
+  shops: TShop[];
+}
+
+const MapPage = ({ shops }: IMapPageProps): React.ReactElement => {
   const { query } = useRouter();
   const context = useContext(AppContext);
   const { categories } = context;
@@ -29,7 +35,7 @@ const MapPage = (): React.ReactElement => {
       <div className="relative w-full h-full flex flex-col">
         <SearchBar category={categories.selected} onClick={onClickSearchBar} />
         <main className={ContentStyle}>
-          <Map lat={lat} lng={lng} />
+          <Map lat={lat} lng={lng} data={shops} />
         </main>
         <SearchMenu
           visible={isSearchMenuVisible}
@@ -44,6 +50,13 @@ const MapPage = (): React.ReactElement => {
       </div>
     </div>
   );
+};
+
+export const getServerSideProps = async (): Promise<{ props: IMapPageProps }> => {
+  const shops = await axios.get(process.env.API_HOST + "/api/shops");
+  return {
+    props: { shops: [...shops.data] },
+  };
 };
 
 export default MapPage;

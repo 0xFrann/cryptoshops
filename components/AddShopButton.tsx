@@ -2,7 +2,7 @@ import Link from "next/link";
 import PointIcon from "../assets/point-icon.svg";
 
 const PositionStyle = "absolute bottom-12 right-0 w-full flex justify-end";
-const WrapperStyle = "flex items-center";
+const WrapperStyle = "flex items-center cursor-pointer";
 const IconWrapperStyle =
   "bg-yellow-500 rounded-full -mr-4 z-10 h-16 w-16 flex justify-center items-center shadow-lg";
 const IconStyle = "fill-current text-white";

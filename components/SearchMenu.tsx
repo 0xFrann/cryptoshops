@@ -1,8 +1,8 @@
-import Image from "next/image";
 import router from "next/router";
 import React, { useContext } from "react";
 import AppContext from "../context/AppContext";
 import PlacesAutocomplete from "./PlacesAutocomplete";
+import CloseIcon from "../assets/close-icon.svg";
 
 const SearchMenuStyle =
   "absolute top-0 transition-all duration-300	z-50 bg-gray-200 p-6 w-full h-full";
@@ -51,13 +51,7 @@ const SearchMenu = ({
     >
       <div className={MenuHeaderStyle}>
         <span className={MenuTitleStyle}>Filtrar negocios</span>
-        <Image
-          src="/close-icon.svg"
-          width={10}
-          height={10}
-          alt="Icono de cerrar"
-          onClick={closeMenu}
-        />
+        <CloseIcon width={20} height={20} onClick={closeMenu} />
       </div>
       <div className={FormStyle}>
         {categories && categories.length && (

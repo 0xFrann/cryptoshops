@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
-import { TShop } from "../../types";
+import { TLocation, TShop } from "../../types";
 import { SubmitHandler, useForm } from "react-hook-form";
 import PlacesAutocomplete from "../../components/PlacesAutocomplete";
 import Header from "../../components/Header";
@@ -25,6 +25,13 @@ type IFormValues = {
 };
 
 const CreateShop = (): React.ReactElement => {
+  const context = useContext(AppContext);
+  const { categories } = context;
+  const [location, selectLocation] = useState<TLocation>();
+  const [showMessage, setShowMessage] = useState(false);
+  const [messageState, setMessageState] = useState<TMessageState>("success");
+  const [messageText, setMessageText] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -35,16 +42,9 @@ const CreateShop = (): React.ReactElement => {
     createShop({
       name: data.name,
       category: data.category,
-      ...location,
+      location: { ...location },
     });
   };
-
-  const context = useContext(AppContext);
-  const { categories } = context;
-  const [location, selectLocation] = useState<Pick<TShop, "location">>();
-  const [showMessage, setShowMessage] = useState(false);
-  const [messageState, setMessageState] = useState<TMessageState>("success");
-  const [messageText, setMessageText] = useState("");
 
   const createShop = (newShop: Omit<TShop, "id">): void => {
     axios

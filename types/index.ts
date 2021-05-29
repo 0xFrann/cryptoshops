@@ -1,14 +1,16 @@
+export type TLocation = {
+  latLng: {
+    lat: number;
+    lng: number;
+  };
+  address: string;
+};
+
 export type TShop = {
   id: string;
   name: string;
   ownerId?: string;
-  location: {
-    latLng: {
-      lat: number;
-      lng: number;
-    };
-    address: string;
-  };
+  location: TLocation;
   logo?: string;
   category: string;
 };

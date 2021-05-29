@@ -1,8 +1,9 @@
 import { useEffect, forwardRef, Ref } from "react";
-import Image from "next/image";
+import CloseIcon from "../assets/close-icon.svg";
 import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
 import { ChangeHandler } from "react-hook-form";
+import { TLocation } from "../types";
 
 const WrapperStyle = "relative m-2";
 const InputStyle = "w-full py-2 px-4 h-12 rounded-3xl outline-none focus:shadow-md";
@@ -10,10 +11,10 @@ const ListWrapperStyle =
   "absolute top-14 h-24 w-full bg-white rounded-lg overflow-hidden shadow-xl z-50";
 const ListStyle = "h-full overflow-y-auto py-2";
 const ItemStyle = "py-2 px-3 m-0 text-left";
-const InputCloseIconStyle = "absolute top-3 right-4";
+const InputCloseIconStyle = "absolute top-4 right-3";
 
 interface IPlacesAutocomplete extends Partial<HTMLInputElement> {
-  onSelect?: (string) => void;
+  onSelect?: (val: TLocation) => void;
   onChange?: ChangeHandler;
   onBlur?: ChangeHandler;
 }
@@ -135,7 +136,7 @@ const PlacesAutocomplete = forwardRef(
             role="button"
             tabIndex={0}
           >
-            <Image src="/close-icon.svg" height={12} width={12} alt="Borrar campo de texto" />
+            <CloseIcon height={16} width={16} />
           </div>
         )}
       </div>
