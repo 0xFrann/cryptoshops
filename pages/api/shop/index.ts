@@ -1,13 +1,18 @@
+import { TShop } from "../../../types";
 import db from "../../../utils/db";
 
 export default async (req, res) => {
   try {
-    const { name, address } = req.body;
+    const { name, location }: TShop = req.body;
     const shops = await db.collection("shops").get();
     const shopsData = shops.docs.map((shops) => shops.data());
 
-    if (shopsData.some((shop) => shop.name === name && shop.address === address)) {
-      res.status(400).json({ message: "Shop already exists" });
+    if (
+      shopsData.some((shop) => shop.name === name && shop.location.address === location.address)
+    ) {
+      res.status(409).json({
+        message: "Shop already exists",
+      });
     } else {
       const { id } = await db.collection("shops").add({
         ...req.body,

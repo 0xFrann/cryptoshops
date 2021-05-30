@@ -53,9 +53,13 @@ const CreateShop = (): React.ReactElement => {
         setMessageState("success");
         setMessageText("¡El negocio fue agregado!");
       })
-      .catch(() => {
+      .catch((error) => {
         setMessageState("error");
-        setMessageText("¡Ups! Ocurrió un problema");
+        if (error.response.status === 409) {
+          setMessageText("El negocio ya está registrado");
+        } else {
+          setMessageText("¡Ups! Ocurrió un problema");
+        }
       })
       .finally(() => {
         setShowMessage(true);
