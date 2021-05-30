@@ -22,8 +22,8 @@ const MapPage = ({ shops }: IMapPageProps): React.ReactElement => {
   const { categories } = context;
   const [isSearchMenuVisible, setSearchMenuVisible] = useState(false);
 
-  const lat = isNaN(Number(query?.lat)) ? null : Number(query?.lat);
-  const lng = isNaN(Number(query?.lng)) ? null : Number(query?.lng);
+  const lat = isNaN(Number(query?.lat)) ? undefined : Number(query?.lat);
+  const lng = isNaN(Number(query?.lng)) ? undefined : Number(query?.lng);
 
   const onClickSearchBar = (): void => {
     setSearchMenuVisible((prev) => !prev);

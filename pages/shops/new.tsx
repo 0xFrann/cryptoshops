@@ -6,6 +6,7 @@ import PlacesAutocomplete from "../../components/PlacesAutocomplete";
 import Header from "../../components/Header";
 import AppContext from "../../context/AppContext";
 import Message, { TMessageState } from "../../components/Message";
+import Link from "next/link";
 
 const BackgroundSyle = "bg-gray-200 min-h-screen flex flex-col items-center";
 const ContentStyle = "max-w-lg w-full px-6 py-10 flex flex-col flex-grow items-center flex-grow";
@@ -17,6 +18,7 @@ const InputStyle = "m-2 py-2 px-4 h-12 rounded-3xl outline-none focus:shadow-md"
 const SelectStyle = "m-2 py-2 px-4 h-12 rounded-full outline-none focus:shadow-md bg-white";
 const ButtonStyle = "m-2 h-12 rounded-full focus:outline-none bg-yellow-500 text-white";
 const ErrorStyle = "ring-red-500 ring-2";
+const LinkStyle = "focus:outline-none text-gray-600 my-4";
 
 type IFormValues = {
   name: string;
@@ -116,6 +118,9 @@ const CreateShop = (): React.ReactElement => {
           <button className={ButtonStyle} type="submit">
             Agregar negocio
           </button>
+          <Link href="/map">
+            <button className={LinkStyle}>Ir al mapa</button>
+          </Link>
         </form>
       </div>
     </div>
