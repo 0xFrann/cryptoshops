@@ -1,6 +1,15 @@
+import { NextApiRequest, NextApiResponse } from "next";
+import { TShop } from "../../../types";
 import db from "../../../utils/db";
 
-export default async (req, res) => {
+interface IShopRequest extends NextApiRequest {
+  query: {
+    id: string;
+  };
+  body: TShop;
+}
+
+export default async (req: IShopRequest, res: NextApiResponse): Promise<void> => {
   const { id } = req.query;
 
   try {

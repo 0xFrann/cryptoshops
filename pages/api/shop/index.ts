@@ -1,9 +1,14 @@
+import { NextApiRequest, NextApiResponse } from "next";
 import { TShop } from "../../../types";
 import db from "../../../utils/db";
 
-export default async (req, res) => {
+interface IShopCreation extends NextApiRequest {
+  body: Omit<TShop, "id">;
+}
+
+export default async (req: IShopCreation, res: NextApiResponse): Promise<void> => {
   try {
-    const { name, location }: TShop = req.body;
+    const { name, location } = req.body;
     const shops = await db.collection("shops").get();
     const shopsData = shops.docs.map((shops) => shops.data());
 

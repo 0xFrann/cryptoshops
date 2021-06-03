@@ -1,12 +1,8 @@
 import axios from "axios";
 import { createContext, Dispatch, SetStateAction, useEffect, useState } from "react";
+import { TLocation } from "../types";
 
-export interface ILocation {
-  address: string;
-  latLng: {
-    lat: number;
-    lng: number;
-  };
+export interface ILocation extends TLocation {
   setLocation: Dispatch<SetStateAction<ILocation>>;
 }
 
