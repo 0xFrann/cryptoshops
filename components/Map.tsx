@@ -12,6 +12,7 @@ const StyledPopupContent = "relative flex flex-col y-3 px-2 pt-2 pr-6 rounded-md
 const StyledPopupCloseIcon = "absolute top-0 right-0 cursor-pointer";
 const StyledPopupTitle = "font-bold text-base";
 const StyledPopupSubTitle = "text-gray-500";
+const StyledAddress = "text-blue-900 underline";
 const StyledLinks = "flex space-x-4 mt-3";
 const StyledWhatsAppIcon = "fill-current text-green-600";
 const StyledLinkIcon = "fill-current text-blue-600";
@@ -87,7 +88,14 @@ const Map = ({ lat = -31.4173391, lng = -64.183319, data = [] }: IMapProps): Rea
               />
               <span className={StyledPopupTitle}>{selectedShop?.name}</span>
               <span className={StyledPopupSubTitle}>{selectedShop?.category}</span>
-              <span>{selectedShop?.location.address}</span>
+              <a
+                href={`https://maps.google.com/?q=${selectedShop?.location?.latLng.lat},${selectedShop?.location?.latLng.lng}`}
+                target="_blank"
+                rel="noreferrer"
+                className={StyledAddress}
+              >
+                {selectedShop?.location?.address}
+              </a>
               <span className={StyledLinks}>
                 {selectedShop?.contact?.whatsapp && (
                   <a
