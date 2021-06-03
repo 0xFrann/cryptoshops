@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Map from "../../components/Map";
 import Header from "../../components/Header";
@@ -21,9 +21,18 @@ const MapPage = ({ shops }: IMapPageProps): React.ReactElement => {
   const context = useContext(AppContext);
   const { categories } = context;
   const [isSearchMenuVisible, setSearchMenuVisible] = useState(false);
+  const [filteredShops, setFilteredShops] = useState(shops);
 
   const lat = isNaN(Number(query?.lat)) ? undefined : Number(query?.lat);
   const lng = isNaN(Number(query?.lng)) ? undefined : Number(query?.lng);
+
+  useEffect(() => {
+    if (categories.selected) {
+      setFilteredShops(shops.filter((shop) => shop.category === categories.selected));
+    } else {
+      setFilteredShops(shops);
+    }
+  }, [categories.selected, shops]);
 
   const onClickSearchBar = (): void => {
     setSearchMenuVisible((prev) => !prev);
@@ -35,7 +44,7 @@ const MapPage = ({ shops }: IMapPageProps): React.ReactElement => {
       <div className="relative w-full h-full flex flex-col">
         <SearchBar category={categories.selected} onClick={onClickSearchBar} />
         <main className={ContentStyle}>
-          <Map lat={lat} lng={lng} data={shops} />
+          <Map lat={lat} lng={lng} data={filteredShops} />
         </main>
         <SearchMenu
           visible={isSearchMenuVisible}
