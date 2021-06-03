@@ -1,3 +1,4 @@
+import getConfig from "next/config";
 import React, { useState } from "react";
 import ReactMapboxGl, { Marker, Popup } from "react-mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -6,6 +7,9 @@ import CloseIcon from "../assets/close-icon.svg";
 import WhatsAppIcon from "../assets/whatsapp-icon.svg";
 import LinkIcon from "../assets/link-icon.svg";
 import { TShop } from "../types";
+
+const { publicRuntimeConfig } = getConfig();
+const MAPBOX_GL_TOKEN = publicRuntimeConfig.MAPBOX_GL_TOKEN;
 
 const MarkerStyle = "cursor-pointer";
 const PopupContentStyle = "relative flex flex-col y-3 px-2 pt-2 pr-6 rounded-md w-64";
@@ -24,8 +28,7 @@ interface IMapProps {
 }
 
 const MapComponent = ReactMapboxGl({
-  accessToken:
-    "pk.eyJ1IjoiZnJhbmNvbWQiLCJhIjoiY2tvbml6eXFxMDFtZzJwbW9kZnMxb3l4aCJ9.dSVHZAF_E18d16kb7J_uNQ",
+  accessToken: MAPBOX_GL_TOKEN,
   attributionControl: false,
 });
 

@@ -116,6 +116,7 @@ const PlacesAutocomplete = forwardRef(
           onBlur={onBlur}
           disabled={!ready}
           placeholder="Ingresar dirección"
+          autoComplete="off"
           className={`${InputStyle} ${value ? "pr-10" : ""} ${className}`}
         />
         {status === "OK" && (

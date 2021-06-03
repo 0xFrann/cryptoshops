@@ -1,12 +1,16 @@
+import Link from "next/link";
+import getConfig from "next/config";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { TLocation, TShop } from "../../types";
 import { SubmitHandler, useForm } from "react-hook-form";
 import PlacesAutocomplete from "../../components/PlacesAutocomplete";
 import Header from "../../components/Header";
 import AppContext from "../../context/AppContext";
 import Message, { TMessageState } from "../../components/Message";
-import Link from "next/link";
+
+const { publicRuntimeConfig } = getConfig();
+const SUPPORT_MAIL = publicRuntimeConfig.SUPPORT_MAIL;
 
 const BackgroundSyle = "bg-gray-200 min-h-screen flex flex-col items-center";
 const ContentStyle = "max-w-lg w-full px-6 py-10 flex flex-col flex-grow items-center flex-grow";
@@ -16,15 +20,17 @@ const SubTitleSyle = "mt-4 text-xl";
 const FormStyle = "flex flex-col text-center w-full";
 const InputStyle = "m-2 py-2 px-4 h-12 rounded-3xl outline-none focus:shadow-md";
 const SelectStyle = "m-2 py-2 px-4 h-12 rounded-full outline-none focus:shadow-md bg-white";
-const ButtonStyle = "m-2 h-12 rounded-full focus:outline-none bg-yellow-500 text-white";
+const ButtonStyle = "m-2 h-12 px-6 rounded-full focus:outline-none bg-yellow-500 text-white";
 const ErrorStyle = "ring-red-500 ring-2";
 const LinkStyle = "focus:outline-none text-gray-600 my-4";
+const BottomMessageStyle = "text-sm text-gray-600 my-4 mt-6 select-none";
+const MailStyle = "underline select-text";
 
 type IFormValues = {
   name: string;
   address: string;
   category: string;
-  whatsapp: number;
+  whatsapp: string;
   link: string;
 };
 
@@ -33,7 +39,7 @@ const CreateShop = (): React.ReactElement => {
   const { categories } = context;
   const [location, selectLocation] = useState<TLocation>();
   const [showMessage, setShowMessage] = useState(false);
-  const [messageState, setMessageState] = useState<TMessageState>("success");
+  const [messageState, setMessageState] = useState<TMessageState>(null);
   const [messageText, setMessageText] = useState("");
 
   const {
@@ -49,7 +55,7 @@ const CreateShop = (): React.ReactElement => {
       category: data.category,
       location: { ...location },
       contact: {
-        whatsapp: Number(whatsappNumber),
+        whatsapp: Number(whatsappNumber) || null,
         link: data.link,
       },
     });
@@ -72,12 +78,12 @@ const CreateShop = (): React.ReactElement => {
       })
       .finally(() => {
         setShowMessage(true);
-        setTimeout(() => setShowMessage(false), 3000);
-        reset();
+        setTimeout(() => {
+          setShowMessage(false);
+          reset();
+        }, 5000);
       });
   };
-
-  useEffect(() => console.log(errors.whatsapp), [errors.whatsapp]);
 
   if (showMessage) {
     return (
@@ -85,6 +91,11 @@ const CreateShop = (): React.ReactElement => {
         <Header />
         <div className={`${ContentStyle} justify-center`}>
           <Message state={messageState} text={messageText} />
+          {messageState == "success" && (
+            <Link href={`/map?lat=${location.latLng.lat}&lng=${location.latLng.lng}`}>
+              <button className={ButtonStyle}>Ver en el mapa</button>
+            </Link>
+          )}
         </div>
       </div>
     );
@@ -104,6 +115,7 @@ const CreateShop = (): React.ReactElement => {
           <input
             className={`${InputStyle} ${errors.name ? ErrorStyle : ""}`}
             placeholder="Nombre del negocio"
+            autoComplete="off"
             {...register("name", { required: true })}
           />
           <PlacesAutocomplete
@@ -128,6 +140,7 @@ const CreateShop = (): React.ReactElement => {
             className={`${InputStyle} ${errors.whatsapp ? ErrorStyle : ""}`}
             placeholder="WhatsApp: 351 123 123"
             type="number"
+            autoComplete="off"
             {...register("whatsapp", {
               required: false,
               pattern: /^\d{10}$/,
@@ -136,6 +149,7 @@ const CreateShop = (): React.ReactElement => {
           <input
             className={`${InputStyle} ${errors.link ? ErrorStyle : ""}`}
             placeholder="Link de web o red social"
+            autoComplete="off"
             {...register("link", {
               required: false,
             })}
@@ -146,6 +160,18 @@ const CreateShop = (): React.ReactElement => {
           <Link href="/map">
             <button className={LinkStyle}>Ir al mapa</button>
           </Link>
+          <span className={BottomMessageStyle}>
+            ¿Deseas modificar un negocio o eliminarlo? Comunícate al siguiente mail: {` `}
+            <a
+              href={`mailto:${SUPPORT_MAIL}`}
+              className={MailStyle}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {SUPPORT_MAIL}
+            </a>
+            .
+          </span>
         </form>
       </div>
     </div>
