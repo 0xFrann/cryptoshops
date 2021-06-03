@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { TLocation, TShop } from "../../types";
 import { SubmitHandler, useForm } from "react-hook-form";
 import PlacesAutocomplete from "../../components/PlacesAutocomplete";
@@ -24,6 +24,8 @@ type IFormValues = {
   name: string;
   address: string;
   category: string;
+  whatsapp: number;
+  link: string;
 };
 
 const CreateShop = (): React.ReactElement => {
@@ -41,10 +43,15 @@ const CreateShop = (): React.ReactElement => {
     formState: { errors },
   } = useForm();
   const onSubmit: SubmitHandler<IFormValues> = (data) => {
+    const whatsappNumber = String(data.whatsapp || "").replace(/\D+/g, "");
     createShop({
       name: data.name,
       category: data.category,
       location: { ...location },
+      contact: {
+        whatsapp: Number(whatsappNumber),
+        link: data.link,
+      },
     });
   };
 
@@ -69,6 +76,8 @@ const CreateShop = (): React.ReactElement => {
         reset();
       });
   };
+
+  useEffect(() => console.log(errors.whatsapp), [errors.whatsapp]);
 
   if (showMessage) {
     return (
@@ -115,6 +124,22 @@ const CreateShop = (): React.ReactElement => {
                 </option>
               ))}
           </select>
+          <input
+            className={`${InputStyle} ${errors.whatsapp ? ErrorStyle : ""}`}
+            placeholder="WhatsApp: 351 123 123"
+            type="number"
+            {...register("whatsapp", {
+              required: false,
+              pattern: /^\d{10}$/,
+            })}
+          />
+          <input
+            className={`${InputStyle} ${errors.link ? ErrorStyle : ""}`}
+            placeholder="Link de web o red social"
+            {...register("link", {
+              required: false,
+            })}
+          />
           <button className={ButtonStyle} type="submit">
             Agregar negocio
           </button>

@@ -13,4 +13,8 @@ export type TShop = {
   location: TLocation;
   logo?: string;
   category: string;
+  contact?: {
+    whatsapp?: number;
+    link?: string;
+  };
 };
