@@ -6,6 +6,7 @@ import { TLocation, TShop } from "../../types";
 import { SubmitHandler, useForm } from "react-hook-form";
 import PlacesAutocomplete from "../../components/PlacesAutocomplete";
 import Header from "../../components/Header";
+import HeaderMenu from "../../components/HeaderMenu";
 import AppContext from "../../context/AppContext";
 import Message, { TMessageState } from "../../components/Message";
 
@@ -35,6 +36,7 @@ type IFormValues = {
 };
 
 const CreateShop = (): React.ReactElement => {
+  const [isMenuVisible, setMenuVisible] = useState(false);
   const context = useContext(AppContext);
   const { categories } = context;
   const [location, selectLocation] = useState<TLocation>();
@@ -88,7 +90,6 @@ const CreateShop = (): React.ReactElement => {
   if (showMessage) {
     return (
       <div className={BackgroundSyle}>
-        <Header />
         <div className={`${ContentStyle} justify-center`}>
           <Message state={messageState} text={messageText} />
           {messageState == "success" && (
@@ -103,7 +104,10 @@ const CreateShop = (): React.ReactElement => {
 
   return (
     <div className={BackgroundSyle}>
-      <Header />
+      <Header
+        menuVisible={isMenuVisible}
+        toggleMenuVisible={() => setMenuVisible((prev) => !prev)}
+      />
       <div className={ContentStyle}>
         <div className={HeaderStyle}>
           <h1 className={TitleSyle}>Agregar negocio</h1>
@@ -174,6 +178,7 @@ const CreateShop = (): React.ReactElement => {
           </span>
         </form>
       </div>
+      <HeaderMenu visible={isMenuVisible} toggleVisible={() => setMenuVisible((prev) => !prev)} />
     </div>
   );
 };

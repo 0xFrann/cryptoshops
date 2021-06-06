@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Map from "../../components/Map";
 import Header from "../../components/Header";
+import HeaderMenu from "../../components/HeaderMenu";
 import SearchBar from "../../components/SearchBar";
 import SearchMenu from "../../components/SearchMenu";
 import AppContext from "../../context/AppContext";
@@ -21,6 +22,7 @@ const MapPage = ({ shops }: IMapPageProps): React.ReactElement => {
   const context = useContext(AppContext);
   const { categories } = context;
   const [isSearchMenuVisible, setSearchMenuVisible] = useState(false);
+  const [isMenuVisible, setMenuVisible] = useState(false);
   const [filteredShops, setFilteredShops] = useState(shops);
 
   const lat = isNaN(Number(query?.lat)) ? undefined : Number(query?.lat);
@@ -40,8 +42,11 @@ const MapPage = ({ shops }: IMapPageProps): React.ReactElement => {
 
   return (
     <div className={BackgroundSyle}>
-      <Header />
       <div className="relative w-full h-full flex flex-col">
+        <Header
+          menuVisible={isMenuVisible}
+          toggleMenuVisible={() => setMenuVisible((prev) => !prev)}
+        />
         <SearchBar category={categories.selected} onClick={onClickSearchBar} />
         <main className={ContentStyle}>
           <Map lat={lat} lng={lng} data={filteredShops} />
@@ -55,6 +60,7 @@ const MapPage = ({ shops }: IMapPageProps): React.ReactElement => {
           }
           closeMenu={onClickSearchBar}
         />
+        <HeaderMenu visible={isMenuVisible} toggleVisible={() => setMenuVisible((prev) => !prev)} />
         <AddShopButton />
       </div>
     </div>
