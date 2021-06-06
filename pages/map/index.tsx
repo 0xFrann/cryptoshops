@@ -10,7 +10,8 @@ import AddShopButton from "../../components/AddShopButton";
 import { TShop } from "../../types";
 import axios from "axios";
 
-const BackgroundSyle = "bg-yellow-500 h-screen flex flex-col items-center justify-center";
+const BackgroundSyle =
+  "bg-yellow-500 relative h-screen overflow-hidden flex flex-col items-center justify-center";
 const ContentStyle = "relative h-full w-full";
 
 interface IMapPageProps {
@@ -42,27 +43,25 @@ const MapPage = ({ shops }: IMapPageProps): React.ReactElement => {
 
   return (
     <div className={BackgroundSyle}>
-      <div className="relative w-full h-full flex flex-col">
-        <Header
-          menuVisible={isMenuVisible}
-          toggleMenuVisible={() => setMenuVisible((prev) => !prev)}
-        />
-        <SearchBar category={categories.selected} onClick={onClickSearchBar} />
-        <main className={ContentStyle}>
-          <Map lat={lat} lng={lng} data={filteredShops} />
-        </main>
-        <SearchMenu
-          visible={isSearchMenuVisible}
-          categories={categories.list}
-          selectedCategory={categories.selected}
-          selectCategory={(newSelection) =>
-            categories.setCategories({ ...categories, selected: newSelection })
-          }
-          closeMenu={onClickSearchBar}
-        />
-        <HeaderMenu visible={isMenuVisible} toggleVisible={() => setMenuVisible((prev) => !prev)} />
-        <AddShopButton />
-      </div>
+      <Header
+        menuVisible={isMenuVisible}
+        toggleMenuVisible={() => setMenuVisible((prev) => !prev)}
+      />
+      <SearchBar category={categories.selected} onClick={onClickSearchBar} />
+      <main className={ContentStyle}>
+        <Map lat={lat} lng={lng} data={filteredShops} />
+      </main>
+      <SearchMenu
+        visible={isSearchMenuVisible}
+        categories={categories.list}
+        selectedCategory={categories.selected}
+        selectCategory={(newSelection) =>
+          categories.setCategories({ ...categories, selected: newSelection })
+        }
+        closeMenu={onClickSearchBar}
+      />
+      <HeaderMenu visible={isMenuVisible} toggleVisible={() => setMenuVisible((prev) => !prev)} />
+      <AddShopButton />
     </div>
   );
 };
