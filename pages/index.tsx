@@ -1,9 +1,10 @@
 import React, { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
-import PlacesAutocomplete from "../components/PlacesAutocomplete";
-import PointIcon from "../assets/point-icon.svg";
+import DefaultHead from "../components/DefaultHead";
 import AppContext from "../context/AppContext";
 import { getGeocode } from "use-places-autocomplete";
+import PlacesAutocomplete from "../components/PlacesAutocomplete";
+import PointIcon from "../assets/point-icon.svg";
 
 const BackgroundSyle =
   "bg-gradient-to-t from-red-500 to-yellow-500 min-h-screen flex flex-col items-center px-6 py-10";
@@ -84,44 +85,47 @@ const IndexPage = (): React.ReactElement => {
   }, []);
 
   return (
-    <div className={BackgroundSyle}>
-      <header className={HeaderStyle}>
-        <h1 className={TitleSyle}>
-          Crypto <strong>Shops</strong>
-        </h1>
-        <h2 className={SubTitleSyle}>Encontrá negocios que aceptan criptomonedas</h2>
-      </header>
-      <main className={ContentStyle}>
-        <div className={FormStyle}>
-          <select
-            className={SelectStyle}
-            placeholder="Categoría"
-            defaultValue={categories.selected}
-            onBlur={(e) => onSelectCategory(e)}
-          >
-            <option value="null">Todo</option>
-            {categories &&
-              categories.list?.length &&
-              categories.list?.map((category, i) => (
-                <option value={category} className="capitalize" key={i}>
-                  {category}
-                </option>
-              ))}
-          </select>
-          <PlacesAutocomplete onSelect={searchShops} />
-        </div>
-        <button onClick={getCurrentLocation} className={ButtonStyle}>
-          <PointIcon height={72} width={72} className={IconStyle} />
-          <span className={ButtonExpandedTextStyle}>Explorar</span>
-          <span className={ButtonTextStyle}>Negocios Cercanos</span>
-        </button>
-      </main>
-      <span className={FooterStyle}>
-        <a href="https://github.com/francomd/crypto-shops" target="_blank" rel="noreferrer">
-          CryptoShops v0.0.1 - GitHub
-        </a>
-      </span>
-    </div>
+    <>
+      <DefaultHead />
+      <div className={BackgroundSyle}>
+        <header className={HeaderStyle}>
+          <h1 className={TitleSyle}>
+            Crypto <strong>Shops</strong>
+          </h1>
+          <h2 className={SubTitleSyle}>Encontrá negocios que aceptan criptomonedas</h2>
+        </header>
+        <main className={ContentStyle}>
+          <div className={FormStyle}>
+            <select
+              className={SelectStyle}
+              placeholder="Categoría"
+              defaultValue={categories.selected}
+              onBlur={(e) => onSelectCategory(e)}
+            >
+              <option value="null">Todo</option>
+              {categories &&
+                categories.list?.length &&
+                categories.list?.map((category, i) => (
+                  <option value={category} className="capitalize" key={i}>
+                    {category}
+                  </option>
+                ))}
+            </select>
+            <PlacesAutocomplete onSelect={searchShops} />
+          </div>
+          <button onClick={getCurrentLocation} className={ButtonStyle}>
+            <PointIcon height={72} width={72} className={IconStyle} />
+            <span className={ButtonExpandedTextStyle}>Explorar</span>
+            <span className={ButtonTextStyle}>Negocios Cercanos</span>
+          </button>
+        </main>
+        <span className={FooterStyle}>
+          <a href="https://github.com/francomd/crypto-shops" target="_blank" rel="noreferrer">
+            CryptoShops v0.0.1 - GitHub
+          </a>
+        </span>
+      </div>
+    </>
   );
 };
 

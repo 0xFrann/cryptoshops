@@ -1,14 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
 import { useRouter } from "next/router";
-import Map from "../../components/Map";
+import React, { useContext, useEffect, useState } from "react";
+import DefaultHead from "../../components/DefaultHead";
+import AppContext from "../../context/AppContext";
 import Header from "../../components/Header";
 import HeaderMenu from "../../components/HeaderMenu";
 import SearchBar from "../../components/SearchBar";
 import SearchMenu from "../../components/SearchMenu";
-import AppContext from "../../context/AppContext";
+import Map from "../../components/Map";
 import AddShopButton from "../../components/AddShopButton";
 import { TShop } from "../../types";
-import axios from "axios";
 
 const BackgroundSyle =
   "bg-yellow-500 relative h-screen overflow-hidden flex flex-col items-center justify-center";
@@ -42,27 +43,30 @@ const MapPage = ({ shops }: IMapPageProps): React.ReactElement => {
   };
 
   return (
-    <div className={BackgroundSyle}>
-      <Header
-        menuVisible={isMenuVisible}
-        toggleMenuVisible={() => setMenuVisible((prev) => !prev)}
-      />
-      <SearchBar category={categories.selected} onClick={onClickSearchBar} />
-      <main className={ContentStyle}>
-        <Map lat={lat} lng={lng} data={filteredShops} />
-      </main>
-      <SearchMenu
-        visible={isSearchMenuVisible}
-        categories={categories.list}
-        selectedCategory={categories.selected}
-        selectCategory={(newSelection) =>
-          categories.setCategories({ ...categories, selected: newSelection })
-        }
-        closeMenu={onClickSearchBar}
-      />
-      <HeaderMenu visible={isMenuVisible} toggleVisible={() => setMenuVisible((prev) => !prev)} />
-      <AddShopButton />
-    </div>
+    <>
+      <DefaultHead title="Mapa" />
+      <div className={BackgroundSyle}>
+        <Header
+          menuVisible={isMenuVisible}
+          toggleMenuVisible={() => setMenuVisible((prev) => !prev)}
+        />
+        <SearchBar category={categories.selected} onClick={onClickSearchBar} />
+        <main className={ContentStyle}>
+          <Map lat={lat} lng={lng} data={filteredShops} />
+        </main>
+        <SearchMenu
+          visible={isSearchMenuVisible}
+          categories={categories.list}
+          selectedCategory={categories.selected}
+          selectCategory={(newSelection) =>
+            categories.setCategories({ ...categories, selected: newSelection })
+          }
+          closeMenu={onClickSearchBar}
+        />
+        <HeaderMenu visible={isMenuVisible} toggleVisible={() => setMenuVisible((prev) => !prev)} />
+        <AddShopButton />
+      </div>
+    </>
   );
 };
 

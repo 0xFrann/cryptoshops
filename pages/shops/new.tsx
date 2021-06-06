@@ -2,13 +2,14 @@ import Link from "next/link";
 import getConfig from "next/config";
 import axios from "axios";
 import React, { useContext, useState } from "react";
+import DefaultHead from "../../components/DefaultHead";
+import AppContext from "../../context/AppContext";
 import { TLocation, TShop } from "../../types";
-import { SubmitHandler, useForm } from "react-hook-form";
-import PlacesAutocomplete from "../../components/PlacesAutocomplete";
 import Header from "../../components/Header";
 import HeaderMenu from "../../components/HeaderMenu";
-import AppContext from "../../context/AppContext";
+import PlacesAutocomplete from "../../components/PlacesAutocomplete";
 import Message, { TMessageState } from "../../components/Message";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 const { publicRuntimeConfig } = getConfig();
 const SUPPORT_MAIL = publicRuntimeConfig.SUPPORT_MAIL;
@@ -103,83 +104,86 @@ const CreateShop = (): React.ReactElement => {
   }
 
   return (
-    <div className={BackgroundSyle}>
-      <Header
-        menuVisible={isMenuVisible}
-        toggleMenuVisible={() => setMenuVisible((prev) => !prev)}
-      />
-      <div className={ContentStyle}>
-        <div className={HeaderStyle}>
-          <h1 className={TitleSyle}>Agregar negocio</h1>
-          <h2 className={SubTitleSyle}>
-            Únicamente negocios que acepten criptomonedas como forma de pago
-          </h2>
-        </div>
-        <form className={FormStyle} onSubmit={handleSubmit(onSubmit)}>
-          <input
-            className={`${InputStyle} ${errors.name ? ErrorStyle : ""}`}
-            placeholder="Nombre del negocio"
-            autoComplete="off"
-            {...register("name", { required: true })}
-          />
-          <PlacesAutocomplete
-            onSelect={selectLocation}
-            className={errors.address ? ErrorStyle : ""}
-            {...register("address", { required: true })}
-          />
-          <select
-            className={`${SelectStyle} ${errors.category ? ErrorStyle : ""}`}
-            placeholder="Categoría"
-            {...register("category", { required: true })}
-          >
-            {categories &&
-              categories.list?.length &&
-              categories.list?.map((category, i) => (
-                <option value={category} className="capitalize" key={i}>
-                  {category}
-                </option>
-              ))}
-          </select>
-          <input
-            className={`${InputStyle} ${errors.whatsapp ? ErrorStyle : ""}`}
-            placeholder="WhatsApp: 351 123 123"
-            type="number"
-            autoComplete="off"
-            {...register("whatsapp", {
-              required: false,
-              pattern: /^\d{10}$/,
-            })}
-          />
-          <input
-            className={`${InputStyle} ${errors.link ? ErrorStyle : ""}`}
-            placeholder="Link de web o red social"
-            autoComplete="off"
-            {...register("link", {
-              required: false,
-            })}
-          />
-          <button className={ButtonStyle} type="submit">
-            Agregar negocio
-          </button>
-          <Link href="/map">
-            <button className={LinkStyle}>Ir al mapa</button>
-          </Link>
-          <span className={BottomMessageStyle}>
-            ¿Deseas modificar un negocio o eliminarlo? Comunícate al siguiente mail: {` `}
-            <a
-              href={`mailto:${SUPPORT_MAIL}`}
-              className={MailStyle}
-              target="_blank"
-              rel="noreferrer"
+    <>
+      <DefaultHead title="Agregar Negocio" />
+      <div className={BackgroundSyle}>
+        <Header
+          menuVisible={isMenuVisible}
+          toggleMenuVisible={() => setMenuVisible((prev) => !prev)}
+        />
+        <div className={ContentStyle}>
+          <div className={HeaderStyle}>
+            <h1 className={TitleSyle}>Agregar negocio</h1>
+            <h2 className={SubTitleSyle}>
+              Únicamente negocios que acepten criptomonedas como forma de pago
+            </h2>
+          </div>
+          <form className={FormStyle} onSubmit={handleSubmit(onSubmit)}>
+            <input
+              className={`${InputStyle} ${errors.name ? ErrorStyle : ""}`}
+              placeholder="Nombre del negocio"
+              autoComplete="off"
+              {...register("name", { required: true })}
+            />
+            <PlacesAutocomplete
+              onSelect={selectLocation}
+              className={errors.address ? ErrorStyle : ""}
+              {...register("address", { required: true })}
+            />
+            <select
+              className={`${SelectStyle} ${errors.category ? ErrorStyle : ""}`}
+              placeholder="Categoría"
+              {...register("category", { required: true })}
             >
-              {SUPPORT_MAIL}
-            </a>
-            .
-          </span>
-        </form>
+              {categories &&
+                categories.list?.length &&
+                categories.list?.map((category, i) => (
+                  <option value={category} className="capitalize" key={i}>
+                    {category}
+                  </option>
+                ))}
+            </select>
+            <input
+              className={`${InputStyle} ${errors.whatsapp ? ErrorStyle : ""}`}
+              placeholder="WhatsApp: 351 123 123"
+              type="number"
+              autoComplete="off"
+              {...register("whatsapp", {
+                required: false,
+                pattern: /^\d{10}$/,
+              })}
+            />
+            <input
+              className={`${InputStyle} ${errors.link ? ErrorStyle : ""}`}
+              placeholder="Link de web o red social"
+              autoComplete="off"
+              {...register("link", {
+                required: false,
+              })}
+            />
+            <button className={ButtonStyle} type="submit">
+              Agregar negocio
+            </button>
+            <Link href="/map">
+              <button className={LinkStyle}>Ir al mapa</button>
+            </Link>
+            <span className={BottomMessageStyle}>
+              ¿Deseas modificar un negocio o eliminarlo? Comunícate al siguiente mail: {` `}
+              <a
+                href={`mailto:${SUPPORT_MAIL}`}
+                className={MailStyle}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {SUPPORT_MAIL}
+              </a>
+              .
+            </span>
+          </form>
+        </div>
+        <HeaderMenu visible={isMenuVisible} toggleVisible={() => setMenuVisible((prev) => !prev)} />
       </div>
-      <HeaderMenu visible={isMenuVisible} toggleVisible={() => setMenuVisible((prev) => !prev)} />
-    </div>
+    </>
   );
 };
 

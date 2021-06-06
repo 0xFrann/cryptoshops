@@ -1,7 +1,6 @@
 import type { AppProps /*, AppContext */ } from "next/app";
 import React from "react";
 import "tailwindcss/tailwind.css";
-import DefaultHead from "../components/DefaultHead";
 import AppContext, { useInitializeContextHook } from "../context/AppContext";
 import "../styles/globals.css";
 
@@ -23,7 +22,6 @@ const MyApp = ({ Component, pageProps }: AppProps): React.ReactElement => {
 
   return (
     <AppContext.Provider value={{ location: { ...location }, categories: { ...categories } }}>
-      <DefaultHead />
       <Component {...pageProps} />
     </AppContext.Provider>
   );

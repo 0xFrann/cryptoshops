@@ -1,4 +1,6 @@
 import axios from "axios";
+import React from "react";
+import DefaultHead from "../../components/DefaultHead";
 import { TShop } from "../../types";
 
 interface IShopsPageProps {
@@ -7,11 +9,14 @@ interface IShopsPageProps {
 
 const ShopsPage = ({ shops }: IShopsPageProps): React.ReactElement => {
   return shops ? (
-    <ul>
-      {shops.map((shop, i) => (
-        <li key={i}>{shop.name}</li>
-      ))}
-    </ul>
+    <>
+      <DefaultHead title="Listado de Negocios" />
+      <ul>
+        {shops.map((shop, i) => (
+          <li key={i}>{shop.name}</li>
+        ))}
+      </ul>
+    </>
   ) : (
     <h1>There is no data to show</h1>
   );
