@@ -104,7 +104,7 @@ const IndexPage = (): React.ReactElement => {
         </main>
         <span className={FooterStyle}>
           <a href="https://github.com/francomd/crypto-shops" target="_blank" rel="noreferrer">
-            CryptoShops v0.0.1 - GitHub
+            CryptoShops - GitHub
           </a>
         </span>
       </div>
