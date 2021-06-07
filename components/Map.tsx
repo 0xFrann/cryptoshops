@@ -11,7 +11,7 @@ import { TShop } from "../types";
 const { publicRuntimeConfig } = getConfig();
 const MAPBOX_GL_TOKEN = publicRuntimeConfig.MAPBOX_GL_TOKEN;
 
-const MarkerStyle = "cursor-pointer";
+const MarkerStyle = "cursor-pointer filter drop-shadow-lg";
 const PopupContentStyle = "relative flex flex-col y-3 px-2 pt-2 pr-6 rounded-md w-64";
 const PopupCloseIconStyle = "absolute top-0 right-0 cursor-pointer";
 const PopupTitleStyle = "font-bold text-base";
@@ -20,6 +20,8 @@ const AddressStyle = "text-blue-900 underline";
 const LinksStyle = "flex space-x-4 mt-3";
 const WhatsAppIconStyle = "fill-current text-green-600";
 const LinkIconStyle = "fill-current text-blue-600";
+const ShopPointStyle = "fill-current text-yellow-600";
+const UserPointStyle = "fill-current text-purple-600";
 
 interface IMapProps {
   lat?: number;
@@ -61,9 +63,6 @@ const Map = ({ lat = -31.4173391, lng = -64.183319, data = [] }: IMapProps): Rea
       zoom={[13]}
     >
       <>
-        <Marker coordinates={[lng, lat]}>
-          <PointIcon width={24} height={24} className="fill-current text-purple-600" />
-        </Marker>
         {data?.length &&
           data.map((shop) => {
             return (
@@ -73,10 +72,13 @@ const Map = ({ lat = -31.4173391, lng = -64.183319, data = [] }: IMapProps): Rea
                 onClick={() => handleClickMarker(shop)}
                 className={MarkerStyle}
               >
-                <PointIcon width={32} height={32} className="fill-current text-yellow-600" />
+                <PointIcon width={32} height={32} className={ShopPointStyle} />
               </Marker>
             );
           })}
+        <Marker coordinates={[lng, lat]}>
+          <PointIcon width={24} height={24} className={UserPointStyle} />
+        </Marker>
         {isPopupVisible && selectedShop && (
           <Popup
             coordinates={[selectedShop?.location.latLng.lng, selectedShop?.location.latLng.lat]}
