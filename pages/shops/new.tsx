@@ -70,6 +70,11 @@ const CreateShop = (): React.ReactElement => {
       .then(() => {
         setMessageState("success");
         setMessageText("¡El negocio fue agregado!");
+        context.location.setLocation({ ...context.location, ...location });
+        context.categories.setCategories({
+          ...categories,
+          selected: "",
+        });
       })
       .catch((error) => {
         setMessageState("error");
