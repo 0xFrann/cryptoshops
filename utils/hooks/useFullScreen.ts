@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 const getBrowserFullScreenActive = (): boolean =>
   Boolean(
     process.browser &&
-      (document.fullscreenElement ||
-        document.webkitFullscreenElement ||
-        document.mozFullScreenElement)
+      (document["fullscreenElement"] ||
+        document["webkitFullscreenElement"] ||
+        document["mozFullScreenElement"] ||
+        document["msFullscreenElement"])
   );
 
 const useFullScreen = (): {
@@ -17,16 +18,22 @@ const useFullScreen = (): {
 
   const enterFullScreen = (): void => {
     if (!getBrowserFullScreenActive() && document.fullscreenEnabled) {
-      document.documentElement
-        .requestFullscreen()
-        .catch((e) => console.log("Fullscreen error:", e));
+      (
+        document.documentElement["requestFullscreen"]() ||
+        document.documentElement["webkitRequestFullscreen"]() ||
+        document.documentElement["mozRequestFullscreen"]() ||
+        document.documentElement["msRequestFullscreen"]()
+      ).catch((e) => console.log("Fullscreen error:", e));
     }
     setIsFullScreen(true);
   };
 
   const exitFullScreen = (): void => {
     if (getBrowserFullScreenActive()) {
-      document.exitFullscreen();
+      document["exitFullscreen"]() ||
+        document["webkitExitFullscreen"]() ||
+        document["mozCancelFullScreen"]() ||
+        document["msExitFullscreen"]();
     }
     setIsFullScreen(false);
   };
