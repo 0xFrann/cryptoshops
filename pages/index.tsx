@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { useRouter } from "next/router";
 import DefaultHead from "../components/DefaultHead";
 import AppContext from "../context/AppContext";
@@ -66,23 +66,6 @@ const IndexPage = (): React.ReactElement => {
       categories.setCategories({ ...categories, selected: e.target.value });
     }
   };
-
-  useEffect(() => {
-    const removeClickListener = () => {
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-      } else {
-        document.fullscreenEnabled &&
-          document.documentElement
-            .requestFullscreen()
-            .catch((e) => console.log("Fullscreen error:", e));
-      }
-
-      removeEventListener("click", removeClickListener);
-    };
-
-    addEventListener("click", removeClickListener);
-  }, []);
 
   return (
     <>

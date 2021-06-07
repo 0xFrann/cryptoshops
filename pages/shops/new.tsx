@@ -14,8 +14,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 const { publicRuntimeConfig } = getConfig();
 const SUPPORT_MAIL = publicRuntimeConfig.SUPPORT_MAIL;
 
-const BackgroundSyle = "bg-gray-200 h-screen overflow-hidden flex flex-col items-center";
-const ContentStyle = "max-w-lg w-full px-6 py-10 flex flex-col flex-grow items-center flex-grow";
+const BackgroundSyle = "bg-gray-200 h-screen pt-12 overflow-y-scroll flex flex-col items-center";
+const ContentStyle = "max-w-lg w-full p-6 flex flex-col flex-grow items-center flex-grow";
 const HeaderStyle = "p-6 mb-4";
 const TitleSyle = "text-4xl";
 const SubTitleSyle = "mt-4 text-xl";

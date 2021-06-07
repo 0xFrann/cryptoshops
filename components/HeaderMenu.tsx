@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import setFullScreen from "../utils/setFullScreen";
+import useFullScreen from "../utils/hooks/useFullScreen";
 import FullscreenIcon from "../assets/fullscreen-icon.svg";
 
 const HeaderMenuStyle =
@@ -24,6 +24,7 @@ const HeaderMenu = ({
     router.push(url);
     toggleVisible();
   };
+  const { toggleFullScreen } = useFullScreen();
 
   return (
     <div
@@ -61,7 +62,7 @@ const HeaderMenu = ({
           </button>
         </li> */}
       </ul>
-      <button onClick={setFullScreen} className={FullScreenButtonStyle}>
+      <button onClick={() => toggleFullScreen()} className={FullScreenButtonStyle}>
         <FullscreenIcon width={20} height={20} className={FullScreenIconStyle} />
         Pantalla completa
       </button>

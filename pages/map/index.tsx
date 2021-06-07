@@ -9,10 +9,12 @@ import SearchBar from "../../components/SearchBar";
 import SearchMenu from "../../components/SearchMenu";
 import Map from "../../components/Map";
 import AddShopButton from "../../components/AddShopButton";
+import Confirmation from "../../components/Confirmation";
+import useFullScreen from "../../utils/hooks/useFullScreen";
 import { TShop } from "../../types";
 
 const BackgroundSyle =
-  "bg-yellow-500 relative h-screen overflow-hidden flex flex-col items-center justify-center";
+  "bg-yellow-500 relative h-screen pt-12 overflow-hidden flex flex-col items-center justify-center";
 const ContentStyle = "relative h-full w-full";
 
 interface IMapPageProps {
@@ -25,6 +27,8 @@ const MapPage = ({ shops }: IMapPageProps): React.ReactElement => {
   const { categories } = context;
   const [isSearchMenuVisible, setSearchMenuVisible] = useState(false);
   const [isMenuVisible, setMenuVisible] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const { isFullScreen, setFullScreen } = useFullScreen();
   const [filteredShops, setFilteredShops] = useState(shops);
 
   const lat = isNaN(Number(query?.lat)) ? undefined : Number(query?.lat);
@@ -40,6 +44,25 @@ const MapPage = ({ shops }: IMapPageProps): React.ReactElement => {
 
   const onClickSearchBar = (): void => {
     setSearchMenuVisible((prev) => !prev);
+  };
+
+  useEffect(() => {
+    const modalFullScreenDisabled = Boolean(
+      JSON.parse(localStorage.getItem("modalFullScreenDisabled"))
+    );
+    if (!modalFullScreenDisabled && !isFullScreen) setTimeout(() => setModalVisible(true), 3000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleRejectFullScreen = (): void => {
+    setModalVisible(false);
+    localStorage.setItem("modalFullScreenDisabled", JSON.stringify(true));
+  };
+
+  const handleActivateFullScreen = (): void => {
+    setModalVisible(false);
+    setFullScreen(true);
+    localStorage.setItem("modalFullScreenDisabled", JSON.stringify(false));
   };
 
   return (
@@ -66,6 +89,16 @@ const MapPage = ({ shops }: IMapPageProps): React.ReactElement => {
         <HeaderMenu visible={isMenuVisible} toggleVisible={() => setMenuVisible((prev) => !prev)} />
         <AddShopButton />
       </div>
+      <Confirmation
+        visible={isModalVisible}
+        onClose={() => setModalVisible(false)}
+        closable={false}
+        onAccept={handleActivateFullScreen}
+        onReject={handleRejectFullScreen}
+        message="Te recomendamos la experiencia a pantalla completa."
+        acceptLabel="Activar"
+        rejectLabel="No, gracias"
+      />
     </>
   );
 };
